@@ -1,0 +1,26 @@
+<?php
+// Developed by Dennis Stevense for Digital Deployment
+
+/**
+ * Implementation of hook_feeds_parser_sources_alter().
+ */
+function feeds_parser_sources_source_feeds_parser_sources_alter(&$sources, $content_type) {
+  if (empty($sources['source_title'])) {
+    $sources['source_title'] = array(
+      'name' => t('Source title'),
+      'description' => t('Title of the source of the feed item.'),
+      'callback' => 'feeds_parser_sources_source_title',
+    );
+  }
+}
+
+function feeds_parser_sources_source_title(FeedsImportBatch $batch, $key) {
+  $item = $batch->currentItem();
+
+  if (isset($item['raw']['child'][SIMPLEPIE_NAMESPACE_ATOM_10]['source'][0]['data'])) {
+    return $item['raw']['child'][SIMPLEPIE_NAMESPACE_ATOM_10]['source'][0]['data'];
+  }
+  else if (isset($item['raw']['child']['']['source'][0]['data'])) {
+    return $item['raw']['child']['']['source'][0]['data'];
+  }
+}

@@ -1,0 +1,6 @@
+; Developed by Dennis Stevense for Digital Deployment
+name = Feeds Item Source
+description = Allows the source of a feed item to be mapped.
+package = Feeds
+core = 6.x
+dependencies[] = feeds
